@@ -2,6 +2,7 @@
 #include <iostream>
 
 
+//3D Matrix difinition
 class Matrix3D 
 {
     double ***Matrix = NULL;
@@ -12,17 +13,18 @@ public:
 
     ~Matrix3D();
 
-    int GetP();
-    int GetN();
-    int GetM();
+    int GetP() const;
+    int GetN() const;
+    int GetM() const;
 
-    double GetValue(int p, int n, int m);
+    double GetValue(int p, int n, int m) const;
     void SetValue(int p, int n, int m, double const value);
 
     void SetLayer(int p, Matrix2D const &A);
-    Matrix2D& GetLayer(int p);
+    Matrix2D& GetLayer(int p) const;
 };
 
+//2D Matrix difinition
 class Matrix2D 
 {
     double **Matrix = NULL;
@@ -33,8 +35,41 @@ public:
     Matrix2D(int N, int M);
     ~Matrix2D();
 
-    int GetN();
-    int GetM();
-    double GetValue(int n, int m);
+    int GetN() const;
+    int GetM() const;
+    double GetValue(int n, int m) const;
     void SetValue(int n, int m, double const value);
 };
+
+//2D Calculation Grid difinitio
+class CalcGrid2D
+{
+    Matrix3D Matrix;
+    const double dx, dy, dt;
+
+public:
+    CalcGrid2D(int P, int N, int M);
+    ~CalcGrid2D();
+
+    int GetP() const;
+    int GetN() const;
+    int GetM() const;
+
+    double Getdx() const;
+    double Getdy() const;
+    double Getdt() const;
+
+    double GetX(int n) const;
+    double GetY(int m) const;
+    double GetT(int p) const;
+
+    Matrix2D& GetLayer(int p) const;
+    void SetLayer(int p, Matrix2D &A);
+};
+
+//Functions
+Matrix2D& LambdaX(Matrix2D const &T, double dx);
+void LambdaX(Matrix3D const &T, Matrix3D &LxT, int p, double dx);
+Matrix2D& LambdaY(Matrix2D const &T, double dy);
+void LambdaY(Matrix3D const &T, Matrix3D &LyT, int p, double dy);
+

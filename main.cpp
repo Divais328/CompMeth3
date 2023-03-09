@@ -1,59 +1,64 @@
 #include <iostream>
-#include "Matrixes.hpp"
+#include "CalcGrid.hpp"
 
 
+//                   4
+//     |---------------------------|
+//     |                           |
+//     |                           |
+//     |                           |
+//     |                           |
+//  1  |                           |  2
+//     |                           |
+//     |                           |
+//     |                           |
+//     |                           |
+//     |---------------------------|
+//                   3
 
 
-Matrix2D& LambdaX(Matrix2D T, double dx)
+double Border1 (double x, double t)
 {
-    Matrix2D LxT = T;
-    for (int i = 1; i < LxT.GetN()-1; ++i)
-    {
-        for (int j = 1; j < LxT.GetM()-1; ++j)
-        {
-            LxT.SetValue(i, j, (T.GetValue(i-1,j)-2*T.GetValue(i,j)+T.GetValue(i+1,j))/dx/dx);
-        }
-    }
-    return LxT;
-}
-void LambdaX(Matrix3D T, Matrix3D LxT, int p, double dx)
-{
-    for (int i = 1; i < LxT.GetN()-1; ++i)
-    {
-        for (int j = 1; j < LxT.GetM()-1; ++j)
-        {
-            LxT.SetValue(p,i, j, (T.GetValue(p,i-1,j)-2*T.GetValue(p,i,j)+T.GetValue(p,i+1,j))/dx/dx);
-        }
-    }
+    return 0;
 }
 
-Matrix2D& LambdaY(Matrix2D T, double dy)
+double Border2 (double x, double t)
 {
-    Matrix2D LyT = T;
-    for (int i = 1; i < LyT.GetN()-1; ++i)
-    {
-        for (int j = 1; j < LyT.GetM()-1; ++j)
-        {
-            LyT.SetValue(i, j, (T.GetValue(i,j-1)-2*T.GetValue(i,j)+T.GetValue(i,j+1))/dy/dy);
-        }
-    }
-    return LyT;
+    return 0;
 }
 
-void LambdaY(Matrix3D T, Matrix3D LyT, int p, double dy)
+double Border3 (double y, double t)
 {
-    for (int i = 1; i < LyT.GetN()-1; ++i)
-    {
-        for (int j = 1; j < LyT.GetM()-1; ++j)
-        {
-            LyT.SetValue(p,i, j, (T.GetValue(p,i-1,j)-2*T.GetValue(p,i,j)+T.GetValue(p,i+1,j))/dy/dy);
-        }
-    }
+    return 0;
 }
 
-int main ()
+double Border4 (double y, double t)
 {
-    std::cout << "PZDC" << std::endl;
+    return 0;
+}
 
+void TriDiag(double t)
+{
+    double g, a;
+    for (int i = 1; i <= N; ++i)
+    {
+        g = A[i] / B[i - 1];
+        B[i] = B[i] - g * C[i - 1];
+        D[i] = D[i] - g * D[i - 1];
+    }
+    Y[N] = (pt2GL)(t);
+    for (int i = N-1 ; i > 0; --i)
+    {
+        Y[i] = (D[i] - C[i] * Y[i + 1]) / B[i];
+        a = Y[i];
+    }
+    Y[0] = (pt2G0)(t);
+}
+
+
+int main (int argc, char *argv[])
+{
+    std::cout << "Starting of PZDC Program" << std::endl;
+     
     return 0;
 }
