@@ -63,6 +63,9 @@ public:
     double GetY(int m) const;
     double GetT(int p) const;
 
+    void SetValue(int p, int n, int m, double value);
+    double GetValue(int p, int n, int m) const;
+
     Matrix2D& GetLayer(int p) const;
     void SetLayer(int p, Matrix2D &A);
 };

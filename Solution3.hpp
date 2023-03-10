@@ -22,7 +22,7 @@
 
 class Solution 
 {
-    CalcGrid2D grid;
+    CalcGrid2D grid1, grid2;
     double (&Border1)(double, double);
     double (&Border2)(double, double);
     double (&Border3)(double, double);
@@ -30,6 +30,7 @@ class Solution
     const double k = 1;
     double *A, *B, *C, *D;
 
+    void Memory();
     void TriDiag();
     void ABCDX();
     void ABCDY();
@@ -45,4 +46,8 @@ public:
     int GetP();
     int GetN();
     int GetM();
+
+    double GetDx();
+    double GetDy();
+    double GetDt();
 };

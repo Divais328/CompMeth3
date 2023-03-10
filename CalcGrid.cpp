@@ -3,24 +3,24 @@
 //3D Matrix realisation
 Matrix3D::Matrix3D(Matrix3D const &A): P(A.P), N(A.N), M(A.M)
 {
-    Matrix = new double **[P];
-    Matrix[0] = new double *[(P) * (N)];
-    for (int j = 1; j < N; ++j)
+    Matrix = new double **[P+1];
+    Matrix[0] = new double *[(P+1) * (N+1)];
+    for (int j = 1; j <= N; ++j)
     {
-        Matrix[0][j] = Matrix[0][j - 1] + M;
-        for (int k = 0; k < M; ++k)
+        Matrix[0][j] = Matrix[0][j - 1] + M+1;
+        for (int k = 0; k <= M; ++k)
         {
             Matrix[0][j][k] = A.Matrix[0][j][k];
         }
     }
-    Matrix[0][0] = new double[(P) * (N) * (M)];
-    for (int i = 1; i < P; ++i)
+    Matrix[0][0] = new double[(P+1) * (N+1) * (M+1)];
+    for (int i = 1; i <= P; ++i)
     {
-        Matrix[i] = Matrix[i - 1] + N;
-        for (int j = 1; j < N; ++j)
+        Matrix[i] = Matrix[i - 1] + N+1;
+        for (int j = 1; j <= N; ++j)
         {
-            Matrix[i][j] = Matrix[i][j - 1] + M;
-            for (int k = 0; k < M; ++k)
+            Matrix[i][j] = Matrix[i][j - 1] + M+1;
+            for (int k = 0; k <= M; ++k)
             {
                 Matrix[i][j][k] = A.Matrix[i][j][k];
             }
@@ -30,24 +30,24 @@ Matrix3D::Matrix3D(Matrix3D const &A): P(A.P), N(A.N), M(A.M)
 }
 Matrix3D::Matrix3D(int P, int N, int M): P(P), N(N), M(M)
 {
-    Matrix = new double **[P];
-    Matrix[0] = new double *[(P) * (N)];
-    for (int j = 1; j < N; ++j)
+    Matrix = new double **[P+1];
+    Matrix[0] = new double *[(P+1) * (N+1)];
+    for (int j = 1; j <= N; ++j)
     {
-        Matrix[0][j] = Matrix[0][j - 1] + M;
-        for (int k = 0; k < M; ++k)
+        Matrix[0][j] = Matrix[0][j - 1] + M+1;
+        for (int k = 0; k <= M; ++k)
         {
             Matrix[0][j][k] = 0;
         }
     }
-    Matrix[0][0] = new double[(P) * (N) * (M)];
-    for (int i = 1; i < P; ++i)
+    Matrix[0][0] = new double[(P+1) * (N+1) * (M+1)];
+    for (int i = 1; i <= P; ++i)
     {
-        Matrix[i] = Matrix[i - 1] + N;
-        for (int j = 1; j < N; ++j)
+        Matrix[i] = Matrix[i - 1] + N+1;
+        for (int j = 1; j <= N; ++j)
         {
-            Matrix[i][j] = Matrix[i][j - 1] + M;
-            for (int k = 0; k < M; ++k)
+            Matrix[i][j] = Matrix[i][j - 1] + M+1;
+            for (int k = 0; k <= M; ++k)
             {
                 Matrix[i][j][k] = 0;
             }
@@ -168,7 +168,7 @@ void Matrix2D::SetValue(int n, int m, double const value)
 }
 
 //2D Calculation Grid realisation
-CalcGrid2D::CalcGrid2D(int P, int N, int M): Matrix(P+1,N+1,M+1), dt(1/P), dx(1/N), dy(1/M) {}
+CalcGrid2D::CalcGrid2D(int P, int N, int M): Matrix(P,N,M), dt(1/P), dx(1/N), dy(1/M) {}
 CalcGrid2D::~CalcGrid2D() {}
 
 int CalcGrid2D::GetP() const
@@ -217,6 +217,15 @@ double CalcGrid2D::GetT(int p) const
         return p * dx;
     else
         return -1;
+}
+
+void CalcGrid2D::SetValue(int p, int n, int m, double value)
+{
+    Matrix.SetValue(p, n, m, value);
+}
+double CalcGrid2D::GetValue(int p, int n, int m) const
+{
+    return Matrix.GetValue(p, n, m);
 }
 
 Matrix2D& CalcGrid2D::GetLayer(int p) const

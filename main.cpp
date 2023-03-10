@@ -1,6 +1,8 @@
 #include <iostream>
 #include "CalcGrid.hpp"
+#include  <cmath>
 
+#define pi = arcos(-1)
 
 //                   4
 //     |---------------------------|
@@ -17,22 +19,22 @@
 //                   3
 
 
-double Border1 (double x, double t)
+double Border1 (double y, double t)
 {
     return 0;
 }
 
-double Border2 (double x, double t)
+double Border2 (double y, double t)
 {
     return 0;
 }
 
-double Border3 (double y, double t)
+double Border3 (double x, double t)
 {
     return 0;
 }
 
-double Border4 (double y, double t)
+double Border4 (double x, double t)
 {
     return 0;
 }
