@@ -1,8 +1,9 @@
 #include <iostream>
+#include <cmath>
 #include "CalcGrid.hpp"
-#include  <cmath>
+#include "Solution3.hpp"
 
-#define pi = arcos(-1)
+long double pi = acos(-1);
 
 //                   4
 //     |---------------------------|
@@ -19,48 +20,40 @@
 //                   3
 
 
-double Border1 (double y, double t)
+double InitialState(double x, double y)
+{
+    return sin(pi * x) * sin(pi * y);
+}
+
+double Border1 (double y)
+{
+    return 0;
+}
+double Border2 (double y)
+{
+    return 0;
+}
+double Border3 (double x)
+{
+    return 0;
+}
+double Border4 (double x)
 {
     return 0;
 }
 
-double Border2 (double y, double t)
-{
-    return 0;
-}
 
-double Border3 (double x, double t)
-{
-    return 0;
-}
-
-double Border4 (double x, double t)
-{
-    return 0;
-}
-
-void TriDiag(double t)
-{
-    double g, a;
-    for (int i = 1; i <= N; ++i)
-    {
-        g = A[i] / B[i - 1];
-        B[i] = B[i] - g * C[i - 1];
-        D[i] = D[i] - g * D[i - 1];
-    }
-    Y[N] = (pt2GL)(t);
-    for (int i = N-1 ; i > 0; --i)
-    {
-        Y[i] = (D[i] - C[i] * Y[i + 1]) / B[i];
-        a = Y[i];
-    }
-    Y[0] = (pt2G0)(t);
-}
-
+int P = 10, N = 5, M = 5;
+double k = 1. / 2. / pi;
 
 int main (int argc, char *argv[])
 {
     std::cout << "Starting of PZDC Program" << std::endl;
-     
+    Solution S1(P, N, M, k, InitialState, Border1, Border2, Border3, Border4);
+    std::cout << S1.GetP() << " " << S1.GetN() << " " << S1.GetM() << std::endl;
+    std::cout << "(0,0,0) = " << S1.GetValue(0, 0, 0) << std::endl;
+    std::cout << "(0,2,3) = " << S1.GetValue(0, 2, 3) << std::endl;
+    std::cout << "(P,0,0) = " << S1.GetValue(P, 0, 0) << std::endl;
+    std::cout << "(P,2,3) = " << S1.GetValue(P, 2, 3) << std::endl;
     return 0;
 }

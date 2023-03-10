@@ -1,6 +1,22 @@
 #pragma once
 #include <iostream>
 
+//2D Matrix difinition
+class Matrix2D 
+{
+    double **Matrix = NULL;
+    const int N, M;
+
+public:
+    Matrix2D(Matrix2D const &A);
+    Matrix2D(int N, int M);
+    ~Matrix2D();
+
+    int GetN() const;
+    int GetM() const;
+    double GetValue(int n, int m) const;
+    void SetValue(int n, int m, double const value);
+};
 
 //3D Matrix difinition
 class Matrix3D 
@@ -22,23 +38,6 @@ public:
 
     void SetLayer(int p, Matrix2D const &A);
     Matrix2D& GetLayer(int p) const;
-};
-
-//2D Matrix difinition
-class Matrix2D 
-{
-    double **Matrix = NULL;
-    const int N, M;
-
-public:
-    Matrix2D(Matrix2D const &A);
-    Matrix2D(int N, int M);
-    ~Matrix2D();
-
-    int GetN() const;
-    int GetM() const;
-    double GetValue(int n, int m) const;
-    void SetValue(int n, int m, double const value);
 };
 
 //2D Calculation Grid difinitio
