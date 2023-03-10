@@ -44,16 +44,17 @@ double Border4 (double x)
 
 
 int P = 10, N = 5, M = 5;
-double k = 1. / 2. / pi;
+const double k = 1. / 2. / pi;
 
 int main (int argc, char *argv[])
 {
+    if (argc == 3)
+    {
+        P = atof(argv[1]);
+        N = atof(argv[2]);
+        M = atof(argv[3]);
+    }
     std::cout << "Starting of PZDC Program" << std::endl;
     Solution S1(P, N, M, k, InitialState, Border1, Border2, Border3, Border4);
-    std::cout << S1.GetP() << " " << S1.GetN() << " " << S1.GetM() << std::endl;
-    std::cout << "(0,0,0) = " << S1.GetValue(0, 0, 0) << std::endl;
-    std::cout << "(0,2,3) = " << S1.GetValue(0, 2, 3) << std::endl;
-    std::cout << "(P,0,0) = " << S1.GetValue(P, 0, 0) << std::endl;
-    std::cout << "(P,2,3) = " << S1.GetValue(P, 2, 3) << std::endl;
     return 0;
 }
