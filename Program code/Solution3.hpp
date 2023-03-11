@@ -1,6 +1,9 @@
 #pragma once
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
 #include "CalcGrid.hpp"
 
 
@@ -67,4 +70,8 @@ public:
 
     double GetValue(int p, int n, int m) const;
     void SetValue(int p, int n, int m, double value);
+
+    friend std::ostream &operator<<(std::ostream &out, const Solution &S);
+    void Save() const;
+    void Save(std::string path) const;
 };

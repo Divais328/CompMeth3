@@ -48,13 +48,13 @@ const double k = 1. / 2. / pi;
 
 int main (int argc, char *argv[])
 {
-    if (argc == 3)
+    if (argc == 4)
     {
         P = atof(argv[1]);
         N = atof(argv[2]);
         M = atof(argv[3]);
     }
-    std::cout << "Starting of PZDC Program" << std::endl;
     Solution S1(P, N, M, k, InitialState, Border1, Border2, Border3, Border4);
+    S1.Save();
     return 0;
 }

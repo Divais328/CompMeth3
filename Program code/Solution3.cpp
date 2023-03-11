@@ -188,4 +188,58 @@ void Solution::SetValue2(int p, int n, int m, double value)
     grid2.SetValue(p, n, m, value);
 }
 
+void Solution::Save() const
+{
+    std::ofstream File;
+    std::stringstream path;
+    path << "Solution_" << GetP() << "_" << GetN() << "_" << GetM() << ".txt";
 
+    File.open(path.str(),std::ios::out);
+    if (!File.is_open())
+    {
+        std::cout << "Error!" << std::endl;
+    }
+    else
+    {
+        File << this;
+        File.close();
+    }
+}
+
+void Solution::Save(std::string path) const
+{
+    std::ofstream File;
+    File.open(path,std::ios::out);
+    if (!File.is_open())
+    {
+        std::cout << "Error!" << std::endl;
+    }
+    else
+    {
+        File << this;
+        File.close();
+    }
+}
+
+std::ostream& operator<< (std::ostream &out, const Solution &S)
+{
+    out << "X\tY";
+    for (int p = 0; p <= S.GetP(); ++p)
+    {
+        out << "\tT = " << S.GetT(p);
+    }
+    out << std::endl;
+    for (int n = 0; n <= S.GetN(); ++n)
+    {
+        for (int m = 0; m <= S.GetM(); ++m)
+        {
+            out << S.GetX(n) << "\t" << S.GetY(m);
+            for (int p = 0; p <= S.GetP(); ++p)
+            {
+                out << "\t" << S.GetValue(p, n, m);
+            }
+            out << std::endl;
+        }
+    }
+    return out;
+}
