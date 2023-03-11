@@ -22,7 +22,7 @@ long double pi = acos(-1);
 //     |---------------------------|
 //                   3
 
-
+ 
 double InitialState(double x, double y)
 {
     return sin(pi * x) * sin(pi * y);
