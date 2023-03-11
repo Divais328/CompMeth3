@@ -201,7 +201,7 @@ void Solution::Save() const
     }
     else
     {
-        File << this;
+        File << *this;
         File.close();
     }
 }
@@ -216,7 +216,7 @@ void Solution::Save(std::string path) const
     }
     else
     {
-        File << this;
+        File << *this;
         File.close();
     }
 }
@@ -240,6 +240,7 @@ std::ostream& operator<< (std::ostream &out, const Solution &S)
             }
             out << std::endl;
         }
+        out << std::endl;
     }
     return out;
 }

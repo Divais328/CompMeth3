@@ -69,9 +69,4 @@ public:
     void SetLayer(int p, Matrix2D &A);
 };
 
-//Functions
-Matrix2D& LambdaX(Matrix2D const &T, double dx);
-void LambdaX(Matrix3D const &T, Matrix3D &LxT, int p, double dx);
-Matrix2D& LambdaY(Matrix2D const &T, double dy);
-void LambdaY(Matrix3D const &T, Matrix3D &LyT, int p, double dy);
 
