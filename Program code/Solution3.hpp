@@ -31,7 +31,7 @@ class Solution
     double (&Border3)(double);
     double (&Border4)(double);
     double (&InitialState)(double, double);
-    const double k = 1.;
+    const double k = 1./4.;
     double *Gx, *Bx, *Dx, *Gy, *By, *Dy;
     double ax = -k * GetDt() / GetDx() / GetDx(), bx = (1. + 2. * k * GetDt() / GetDx() / GetDx()), cx = -k * GetDt() / GetDx() / GetDx();
     double ay = -k * GetDt() / GetDy() / GetDy(), by = (1. + 2. * k * GetDt() / GetDy() / GetDy()), cy = -k * GetDt() / GetDy() / GetDy();

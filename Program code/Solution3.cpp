@@ -38,7 +38,7 @@ void Solution::Memory()
     Dy = new double [GetM()+1];
 
     Bx[0] = bx;
-    Gx[0] = 0;
+    Gx[0] = 0.;
     for (int n = 1; n < GetN(); ++n)
     {
         Gx[n] = ax / Bx[n - 1];
@@ -48,7 +48,7 @@ void Solution::Memory()
     Gx[GetN()] = ax / Bx[GetN() - 1];
 
     By[0] = by;
-    Gy[0] = 0;
+    Gy[0] = 0.;
     for (int m = 1; m < GetM(); ++m)
     {
         Gy[m] = ay / By[m - 1];
@@ -91,23 +91,23 @@ void Solution::TriDiag()
         for (int m = 1; m < GetM(); ++m)
         {
             DX(p - 1, m);
-            SetValue1(p - 1, GetN(), m, Border2(GetY(m)));
+            //SetValue1(p - 1, GetN(), m, 0); //Border2(GetY(m)));
             for (int n = GetN() - 1; n > 0; --n)
             {
-                SetValue1(p - 1, n, m, (Dx[n] - cx * GetValue2(p - 1, n + 1, m)) / Bx[n]);
+                SetValue1(p - 1, n, m, (Dx[n] - cx * GetValue1(p - 1, n + 1, m)) / Bx[n]);
             }
-            SetValue1(p - 1, 0, m, Border1(GetY(m)));
+            //SetValue1(p - 1, 0, m, 0); //Border1(GetY(m)));
         }
 
         for (int n = 1; n < GetN(); ++n)
         {
             DY(p - 1, n);
-            SetValue2(p, n, GetM(), Border4(GetX(n)));
+            //SetValue2(p, n, GetM(), 0); // Border4(GetX(n)));
             for (int m = GetM() - 1; m > 0; --m)
             {
-                SetValue2(p, n, m, (Dy[m] - cy * GetValue1(p - 1, n, m + 1)) / By[m]);
+                SetValue2(p, n, m, (Dy[m] - cy * GetValue2(p, n, m + 1)) / By[m]);
             }
-            SetValue2(p, n, 0, Border3(GetX(n)));
+            //SetValue2(p, n, 0, 0); //Border3(GetX(n)));
         }
     }
 }
