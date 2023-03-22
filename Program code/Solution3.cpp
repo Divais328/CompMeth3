@@ -223,7 +223,7 @@ void Solution::Save(std::string path) const
 
 std::ostream& operator<< (std::ostream &out, const Solution &S)
 {
-    out << "X\tY";
+    out << "#X\tY";
     for (int p = 0; p <= S.GetP(); ++p)
     {
         out << "\tT = " << S.GetT(p);
@@ -243,4 +243,33 @@ std::ostream& operator<< (std::ostream &out, const Solution &S)
         out << std::endl;
     }
     return out;
+}
+
+void Solution::SaveAllErrors(double (&ExactSolution)(double, double, double))
+{
+    std::ofstream File;
+    std::stringstream path;
+    path << "AllErrors_" << GetP() << "_" << GetN() << "_" << GetM() << ".txt";
+    File.open(path.str(), std::ios::out);
+    
+    File << "#X\tY";
+    for (int p = 0; p <= GetP(); ++p)
+    {
+        File << "\tT = " << GetT(p);
+    }
+    File << std::endl;
+    for (int n = 0; n <= GetN(); ++n)
+    {
+        for (int m = 0; m <= GetM(); ++m)
+        {
+            File << GetX(n) << "\t" << GetY(m);
+            for (int p = 0; p <= GetP(); ++p)
+            {
+                File << "\t" << abs(GetValue(p, n, m) - ExactSolution(GetT(p),GetX(n), GetY(m)));
+            }
+            File << std::endl;
+        }
+        File << std::endl;
+    }
+    File.close();
 }

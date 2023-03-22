@@ -74,4 +74,6 @@ public:
     friend std::ostream &operator<<(std::ostream &out, const Solution &S);
     void Save() const;
     void Save(std::string path) const;
+
+    void SaveAllErrors(double (&ExactSolution)(double, double, double));
 };

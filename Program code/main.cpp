@@ -53,9 +53,9 @@ double ExactSolution(double t, double x, double y)
 double Error (Solution &S, int p)
 {
     double Error = 0, MaxError = 0;
-    for (int n = 0; n <= S.GetN(); ++n)
+    for (int n = 0; n < S.GetN(); ++n)
     {
-        for (int m = 0; m <= S.GetM(); ++m)
+        for (int m = 0; m < S.GetM(); ++m)
         {
             Error = abs(ExactSolution(S.GetT(p), S.GetX(n), S.GetY(m)) - S.GetValue(p, n, m));
             if (Error > MaxError)
@@ -66,6 +66,25 @@ double Error (Solution &S, int p)
     }
     return MaxError;
 }
+
+double RelError (Solution &S, int p)
+{
+    double Error = 0, MaxError = 0, RelError = 0;
+    for (int n = 1; n < S.GetN(); ++n)
+    {
+        for (int m = 1; m < S.GetM(); ++m)
+        {
+            Error = abs(ExactSolution(S.GetT(p), S.GetX(n), S.GetY(m)) - S.GetValue(p, n, m));
+            if (Error > MaxError)
+            {
+                MaxError = Error;
+                RelError = MaxError / ExactSolution(S.GetT(p), S.GetX(n), S.GetY(m));
+            }
+        }
+    }
+    return RelError;
+}
+
 
 int P = 10, N = 5, M = 5;
 const double k = 1. / 2. / pi;
@@ -125,7 +144,7 @@ int main (int argc, char *argv[])
             I = P / 10.;
             for (int i = 1; i <= 10; ++i)
             {
-                File << S1.GetT(i*I)<< "\t" << Error(S1, i * I)<<std::endl;
+                File << S1.GetT(i * I) << "\t" << Error(S1, i * I) << std::endl;
             }
             File.close();
         }
@@ -152,6 +171,31 @@ int main (int argc, char *argv[])
         }
     }
 
-    
-    return 0;
+    if (atof(argv[1]) == 4)
+    {
+        Solution S1(P, N, M, k, InitialState, Border1, Border2, Border3, Border4);
+        path << "RelError_" << P << "_" << N << "_" << M << ".txt";
+        File.open(path.str(), std::ios::out);
+        if(!File.is_open())
+        {
+            std::cout << "Error!" << std::endl;
+        }
+        else
+        {
+            I = P / 10.;
+            for (int i = 1; i <= 10; ++i)
+            {
+                File << S1.GetT(i * I) << "\t" << RelError(S1, i * I) << std::endl;
+            }
+            File.close();
+        }
+    }
+
+    if (atof(argv[1]) == 5)
+    {
+        Solution S1(P, N, M, k, InitialState, Border1, Border2, Border3, Border4);
+        S1.SaveAllErrors(ExactSolution);
+    }
+
+        return 0;
 }
